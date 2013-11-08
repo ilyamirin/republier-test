@@ -28,7 +28,7 @@ public class App {
             Map<String, Set<String>> indexMap = new HashMap<String, Set<String>>();
             reversedIndex.load(indexMap);
             for (int i = 2; i < args.length; i++) {
-                System.out.println(indexMap.get(args[i]));
+                System.out.println(args[i] + ": " + indexMap.get(args[i]));
             }
             
         } else {

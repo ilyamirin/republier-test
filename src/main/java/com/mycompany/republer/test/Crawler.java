@@ -17,6 +17,23 @@ public class Crawler {
 
     protected Map<String, Set<String>> memory = new HashMap<String, Set<String>>();
 
+    /*
+     Apache commons code
+     */
+    protected static boolean isSymlink(File file) throws IOException {
+        if (file == null) {
+            throw new NullPointerException("File must not be null");
+        }
+        File canon;
+        if (file.getParent() == null) {
+            canon = file;
+        } else {
+            File canonDir = file.getParentFile().getCanonicalFile();
+            canon = new File(canonDir, file.getName());
+        }
+        return !canon.getCanonicalFile().equals(canon.getAbsoluteFile());
+    }
+
     protected void memorize(String path, String fileName) {
         if (!memory.containsKey(fileName)) {
             memory.put(fileName, new HashSet<String>(1));
@@ -24,21 +41,21 @@ public class Crawler {
         memory.get(fileName).add(path);
     }
 
-    public void crawl(File file) {
-        if (!file.exists() || !file.canRead()) {
-            log.error("Can`t get access to {}", file.getPath());
+    public void crawl(File file) throws IOException {
+        if (!file.exists() || !file.canRead() || Crawler.isSymlink(file)) {
+            log.error("Can`t get access to {} or it`s symlink", file.getPath());
+            return;
+        }
+        
+        memorize(file.getAbsolutePath(), file.getName());
+        if (memory.size() % 100 == 0) {
+            log.info("{} files were found", memory.size());
+        }
 
-        } else if (file.isFile()) {
-            memorize(file.getAbsolutePath(), file.getName());
-            if (memory.size() % 100 == 0) {
-                log.info("{} files were found", memory.size());
-            }
-
-        } else if (file.isDirectory()) {
+        if (file.isDirectory()) {
             for (File innerFile : file.listFiles()) {
                 crawl(innerFile);
             }
-
         }
     }
 
