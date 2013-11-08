@@ -21,7 +21,7 @@ public class ReversedIndexTest {
         memory.put("second", Sets.newHashSet("/root/second"));
         memory.put("third", Sets.newHashSet("/tmp/wj3hnfgn23gfm28gm2"));
                 
-        ReversedIndex reversedIndex = ReversedIndex.newReversedIndex();
+        ReversedIndex reversedIndex = ReversedIndex.newReversedIndex("index.txt");
         reversedIndex.dump(memory);
         
         Map<String, Set<String>> loadedMemory = new HashMap<String, Set<String>>();

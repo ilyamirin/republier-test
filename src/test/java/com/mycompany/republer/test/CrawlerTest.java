@@ -32,7 +32,7 @@ public class CrawlerTest {
 
     @Test
     public void crawlingTest() throws IOException {
-        File root = new File("testdir");
+        File root = new File("testdir/");
         if (!root.exists()) {
             root.mkdir();
         }
@@ -62,6 +62,13 @@ public class CrawlerTest {
         
         log.info("{}", crawler.memorySize());
         
-        crawler.remember();
+        crawler.remember("index.txt");
     }
+    
+    @Test
+    public void appTest() throws IOException {        
+        App.main(new String[] {"build", "index.txt", "testdir"});
+        App.main(new String[] {"find", "index.txt", "file"});
+        App.main(new String[] {"find", "index.txt", "second"});
+    }    
 }

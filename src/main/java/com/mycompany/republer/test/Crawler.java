@@ -46,8 +46,8 @@ public class Crawler {
         return memory.size();
     }
 
-    public void remember() throws IOException {
-        ReversedIndex index = ReversedIndex.newReversedIndex();
+    public void remember(String filePath) throws IOException {
+        ReversedIndex index = ReversedIndex.newReversedIndex(filePath);
         index.dump(memory);
     }
 }

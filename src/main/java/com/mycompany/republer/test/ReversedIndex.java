@@ -24,8 +24,7 @@ public class ReversedIndex {
         this.pathToIndex = pathToIndex;
     }
 
-    public static ReversedIndex newReversedIndex() throws IOException {
-        String pathToIndex = "index.txt";
+    public static ReversedIndex newReversedIndex(String pathToIndex) throws IOException {
         return new ReversedIndex(pathToIndex);
     }
 
@@ -48,7 +47,7 @@ public class ReversedIndex {
         BufferedReader bufferedReader = new BufferedReader(new FileReader(pathToIndex));
         while (bufferedReader.ready()) {
             String[] result = bufferedReader.readLine().split(" ");            
-            Set<String> pathes = Sets.newHashSet(Arrays.copyOfRange(result, 0, result.length));
+            Set<String> pathes = Sets.newHashSet(Arrays.copyOfRange(result, 1, result.length));
             indexMap.put(result[0], pathes);
         }
         bufferedReader.close();

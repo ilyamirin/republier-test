@@ -1,3 +1,4 @@
 target/
 testdir/
 *.txt
+dependency-reduced-pom.xml
