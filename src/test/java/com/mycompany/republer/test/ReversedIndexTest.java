@@ -1,10 +1,10 @@
 package com.mycompany.republer.test;
 
-import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -16,15 +16,15 @@ public class ReversedIndexTest {
  
     @Test
     public void test() throws IOException {        
-        Map<String, List<String>> memory = new HashMap<String, List<String>>();
-        memory.put("first", Lists.newArrayList("/root/first", "/root/inner/first"));
-        memory.put("second", Lists.newArrayList("/root/second"));
-        memory.put("third", Lists.newArrayList("/tmp/wj3hnfgn23gfm28gm2"));
+        Map<String, Set<String>> memory = new HashMap<String, Set<String>>();
+        memory.put("first", Sets.newHashSet("/root/first", "/root/inner/first"));
+        memory.put("second", Sets.newHashSet("/root/second"));
+        memory.put("third", Sets.newHashSet("/tmp/wj3hnfgn23gfm28gm2"));
                 
         ReversedIndex reversedIndex = ReversedIndex.newReversedIndex();
         reversedIndex.dump(memory);
         
-        Map<String, List<String>> loadedMemory = new HashMap<String, List<String>>();
+        Map<String, Set<String>> loadedMemory = new HashMap<String, Set<String>>();
         reversedIndex.load(loadedMemory);
         
         assertEquals(memory, loadedMemory);

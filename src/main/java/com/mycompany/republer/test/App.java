@@ -3,8 +3,8 @@ package com.mycompany.republer.test;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -20,15 +20,15 @@ public class App {
                 File file = new File(args[i]);
                 crawler.crawl(file);
             }
-            log.info("{} files were found", crawler.memorySize());
+            log.trace("{} files were found", crawler.memorySize());
             crawler.remember();
             
         } else if (args[0].equals("find")) {
             ReversedIndex reversedIndex = ReversedIndex.newReversedIndex();
-            Map<String, List<String>> indexMap = new HashMap<String, List<String>>();
+            Map<String, Set<String>> indexMap = new HashMap<String, Set<String>>();
             reversedIndex.load(indexMap);
             for (int i = 1; i < args.length; i++) {
-                log.info("{}", indexMap.get(args[i]));
+                System.out.println(indexMap.get(args[i]));
             }
             
         } else {
